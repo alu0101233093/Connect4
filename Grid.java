@@ -1,42 +1,49 @@
 public class Grid {
-	private Slot[][] gridSlots_;
+    // clase slot no hace falta (get de get y setter llamando setter)
+	private String[][] gridSlots_;
+    private int count_;
 
 	Grid() {
-		gridSlots_ = new Slot[6][7];
+		gridSlots_ = new String[6][7];
+        count_ = 0;
 	}
 
+    // get de un get
 	public String getSlot(int row, int col) {
-		return gridSlots_[row][col].get_color();
+		return gridSlots_[row][col];
 	}
 
-	public boolean setSlot(int col, Slot slot) {
+    // set de un set
+	public boolean setSlot(int col, String color) {
 		if(gridSlots_[5][col] != null)
 			return false;
 
-		gridSlots_[checkLastSlot(col) + 1][col] = slot;
+		gridSlots_[FirstFreeSlot(col)][col] = color;
 		return true;
 	}
 
-	public int checkLastSlot(int col){
-		for(int i = 0; i < 6; i++){
+	public int FirstFreeSlot(int col) {
+		for(int i = 0; i < 6; i++) {
 			if(gridSlots_[i][col] == null)
-				return i - 1;
+				return i;
 		}
 		return -1;
 	}
 
-
     public boolean checkHorizontal(String color) {
-		for(int i = 0; i < 6; i++){
-            for(int j = 0; j < 7; j++){
+		for(int i = 0; i < 6; i++) {
+            count_ = 0;
+            for(int j = 0; j < 7; j++) {
                 tokenCounter (i, j, color);
             }
         }
         return false;
 	}
+
 	public boolean checkVertical(String color) {
-		for(int i = 0; i < 7; i++){
-            for(int j = 0; j < 6; j++){
+		for(int i = 0; i < 7; i++) {
+            count_ = 0;
+            for(int j = 0; j < 6; j++) {
                 tokenCounter (j, i, color);
             }
         }
@@ -44,16 +51,16 @@ public class Grid {
 	}
 
 	public boolean checkDiagonal (String color) {
-        
         if (checkDiagonalsAscendant(color) || checkDiagonalsDescendant(color)) {
             return true;
+        } else {
+            return false;
         }
-        return false;
 	}
 
     public boolean checkDiagonalsAscendant (String color) {
-
-        for(int i = 1; i <= 3; i++){
+        for(int i = 1; i <= 3; i++) {
+            count_ = 0;
             for (int j = 0; j < 7 - i; j++) {
                 if (tokenCounter (j, j + i, color)) {
                     return true;
@@ -61,19 +68,22 @@ public class Grid {
             }
         }
 
-        for(int i = 5; i >= 3; i--){
+        for(int i = 5; i >= 3; i--) {
+            count_ = 0;
             for (int j = 0; j <= i; j++) {
                 if (tokenCounter (i - j, j, color)) {
                     return true;
                 }
             }
         }
+
         return false;
     }
 
     public boolean checkDiagonalsDescendant (String color) {
 
-        for(int i = 2; i >= 0; i--){
+        for(int i = 2; i >= 0; i--) {
+            count_ = 0;
             for (int j = 0; j < 6 - i; j++) {
                 if (tokenCounter (i + j, j, color)) {
                     return true;
@@ -81,7 +91,8 @@ public class Grid {
             }
         }
 
-        for(int i = 3; i > 0; i--){
+        for(int i = 3; i > 0; i--) {
+            count_ = 0;
             for (int j = 0; j < 7 - i; j++) {
 				if (tokenCounter (5 - j, j + i, color)) {
                     return true;
@@ -92,13 +103,15 @@ public class Grid {
     }
 
 	public boolean tokenCounter (int row, int col, String color) {
-		int count = 0;
-		if(gridSlots_[row][col].get_color() == color)
-                    count++;
-                else
-                    count = 0;
-                if(count == 4)
-                    return true;
+		if(gridSlots_[row][col].get_color() == color) {
+            count_++;
+        } else {
+            count_ = 0;
+        }
+
+        if(count_ == 4) {
+            return true;
+        }
 
 		return false;
 	}

@@ -1,15 +1,15 @@
 public class Slot {
 	private String color;
 
-	Slot(){
+	Slot() {
 		color = null;
 	}
 
-	public String get_color(){
+	public String get_color() {
 		return color;
 	}
 
-	public void set_color(String color){
+	public void set_color(String color) {
 		this.color = color;
 	}
 }

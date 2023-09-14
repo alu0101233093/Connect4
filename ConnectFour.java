@@ -16,15 +16,11 @@ public class ConnectFour {
 	}
 
 	public boolean checkwin(String color) {
-
-		if (checkHorizontal(color)) {
+		if (checkHorizontal(color) || checkVertical(color) || checkDiagonal(color)) {
 			return true;
-		} else if (checkVertical(color)) {
-			return true;
-		} else if (checkDiagonal(color)) {
-			return true;
+		} else {
+			return false;	
 		}
-		return false; 
 	}
 
 }
