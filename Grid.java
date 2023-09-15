@@ -1,16 +1,16 @@
 public class Grid {
     // clase slot no hace falta (get de get y setter llamando setter)
-	private String[][] gridSlots_;
+	private Slot[][] gridSlots_;
     private int count_;
 
 	Grid() {
-		gridSlots_ = new String[6][7];
+		gridSlots_ = new Slot[6][7];
         count_ = 0;
 	}
 
     // get de un get
 	public String getSlot(int row, int col) {
-		return gridSlots_[row][col];
+		return gridSlots_[row][col].get_color();
 	}
 
     // set de un set
@@ -18,7 +18,7 @@ public class Grid {
 		if(gridSlots_[5][col] != null)
 			return false;
 
-		gridSlots_[FirstFreeSlot(col)][col] = color;
+		gridSlots_[FirstFreeSlot(col)][col].set_color(color);
 		return true;
 	}
 
