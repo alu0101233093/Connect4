@@ -1,30 +1,52 @@
 public class Grid {
-    // clase slot no hace falta (get de get y setter llamando setter)
+ 
 	private Slot[][] gridSlots_;
     private int count_;
 
 	Grid() {
-		gridSlots_ = new Slot[6][7];
-        count_ = 0;
+
+        this.count_ = 0;
+		this.gridSlots_ = new Slot[6][7];
+
+        for (int row = 0; row < 6; row++) {
+            for (int col = 0; col < 7; col++) {
+                this.gridSlots_[row][col] = new Slot();
+            }
+        }
+   
 	}
 
-    // get de un get
 	public String getSlot(int row, int col) {
-		return gridSlots_[row][col].get_color();
+		return this.gridSlots_[row][col].get_color();
 	}
 
-    // set de un set
 	public boolean setSlot(int col, String color) {
-		if(gridSlots_[5][col] != null)
+		if(this.gridSlots_[5][col].get_color() != "")
 			return false;
 
-		gridSlots_[FirstFreeSlot(col)][col].set_color(color);
+		this.gridSlots_[FirstFreeSlot(col)][col].set_color(color);
 		return true;
+	}
+
+    public void printGrid() {
+		for (int row = 5; row >= 0; row--) {
+			for (int col = 0; col < 7; col++) {
+				String tokenColor = getSlot(row, col);
+				if (tokenColor.equals("Red")) {
+					System.out.print("R");
+				} else if (tokenColor.equals("Yellow")) {
+					System.out.print("Y");
+				} else {
+					System.out.print("-");
+				}
+			}
+			System.out.println();
+		}
 	}
 
 	public int FirstFreeSlot(int col) {
 		for(int i = 0; i < 6; i++) {
-			if(gridSlots_[i][col] == null)
+			if(gridSlots_[i][col].get_color() == "")
 				return i;
 		}
 		return -1;
@@ -34,7 +56,9 @@ public class Grid {
 		for(int i = 0; i < 6; i++) {
             count_ = 0;
             for(int j = 0; j < 7; j++) {
-                tokenCounter (i, j, color);
+                if (tokenCounter (i, j, color)) {
+                    return true;
+                }
             }
         }
         return false;
@@ -44,7 +68,9 @@ public class Grid {
 		for(int i = 0; i < 7; i++) {
             count_ = 0;
             for(int j = 0; j < 6; j++) {
-                tokenCounter (j, i, color);
+                if (tokenCounter (j, i, color)) {
+                    return true;
+                }
             }
         }
         return false;
