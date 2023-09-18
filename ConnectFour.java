@@ -1,4 +1,3 @@
-
 public class ConnectFour {
 	private Grid grid_;
 	private boolean gameFinished_;

@@ -1,10 +1,8 @@
 public class Grid {
- 
 	private Slot[][] gridSlots_;
     private int count_;
 
 	Grid() {
-
         this.count_ = 0;
 		this.gridSlots_ = new Slot[6][7];
 
@@ -13,7 +11,6 @@ public class Grid {
                 this.gridSlots_[row][col] = new Slot();
             }
         }
-   
 	}
 
 	public String getSlot(int row, int col) {
@@ -29,15 +26,16 @@ public class Grid {
 	}
 
     public void printGrid() {
+        System.out.println("0 1 2 3 4 5 6");
 		for (int row = 5; row >= 0; row--) {
 			for (int col = 0; col < 7; col++) {
 				String tokenColor = getSlot(row, col);
 				if (tokenColor.equals("Red")) {
-					System.out.print("R");
+					System.out.print("R ");
 				} else if (tokenColor.equals("Yellow")) {
-					System.out.print("Y");
+					System.out.print("Y ");
 				} else {
-					System.out.print("-");
+					System.out.print("- ");
 				}
 			}
 			System.out.println();
@@ -46,8 +44,9 @@ public class Grid {
 
 	public int FirstFreeSlot(int col) {
 		for(int i = 0; i < 6; i++) {
-			if(gridSlots_[i][col].get_color() == "")
+			if(gridSlots_[i][col].get_color() == "") {    
 				return i;
+            }
 		}
 		return -1;
 	}
@@ -107,7 +106,6 @@ public class Grid {
     }
 
     public boolean checkDiagonalsDescendant (String color) {
-
         for(int i = 2; i >= 0; i--) {
             count_ = 0;
             for (int j = 0; j < 6 - i; j++) {
