@@ -18,9 +18,9 @@ public class Grid {
 	}
 
 	public boolean setSlot(int col, String color) {
-		if(this.gridSlots_[5][col].get_color() != "")
-			return false;
-
+		if(this.gridSlots_[5][col].get_color() != "") {
+            return false;
+        }
 		this.gridSlots_[FirstFreeSlot(col)][col].set_color(color);
 		return true;
 	}
@@ -101,7 +101,6 @@ public class Grid {
                 }
             }
         }
-
         return false;
     }
 
@@ -136,7 +135,6 @@ public class Grid {
         if(count_ == 4) {
             return true;
         }
-
 		return false;
 	}
 }
