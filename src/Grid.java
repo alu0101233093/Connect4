@@ -62,7 +62,7 @@ public class Grid {
         }
         return false;
 	}
-
+    
 	public boolean checkVertical(String color) {
 		for(int i = 0; i < 7; i++) {
             count_ = 0;
