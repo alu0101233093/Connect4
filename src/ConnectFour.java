@@ -1,47 +1,43 @@
 public class ConnectFour {
 	private Grid grid_;
 	private boolean gameFinished_;
-	private Player players_[];
+	private Player[] players_;
 
 	ConnectFour() {
 		this.grid_ = new Grid();
-		gameFinished_ = false;
-		players_ = new Player[] {new Player("Red"), new Player("Yellow")};
+		this.gameFinished_ = false;
+		this.players_ = new Player[] {new Player("Red"), new Player("Yellow")};
 	}
 
 	public static void main(String[] args) {
-		ConnectFour C4 = new ConnectFour();
-		C4.StartGame();
+		ConnectFour Connect4 = new ConnectFour();
+		Connect4.startGame();
 	}
 
-	public Grid getGrid() {
-		return this.grid_;
-	}
-
-	public void StartGame() {
+	public void startGame() {
 		int playerTurn = 0;
-		grid_.printGrid();
+		this.grid_.printGrid();
 		while(!gameFinished_) {
 			playerTurn = playerTurn%2;
-			if (players_[playerTurn].setToken(grid_)) {
-				if(checkwin(players_[playerTurn].getColor())){
-					System.out.println(players_[playerTurn].getColor() + " player wins");
-					gameFinished_ = true;
-				}
+			if (players_[playerTurn].setToken(this.grid_)) {
+				gameFinished_ = this.checkWin(this.players_[playerTurn].getColor());
 				playerTurn++;
-				grid_.printGrid();
 			} else {
 				System.out.println("Column is full");
 			}
 		}
 	}
 
-	public boolean checkwin(String color) {
-		if (grid_.checkHorizontal(color) || 
-			grid_.checkVertical(color) || 
-			grid_.checkDiagonal(color)) {
+	public boolean checkWin(String color) {
+		if (this.grid_.checkHorizontal(color) ||
+			this.grid_.checkVertical(color) ||
+			this.grid_.checkDiagonal(color)) {
+
+			System.out.println(color + " player wins");
+			this.grid_.printGrid();
 			return true;
 		} else {
+			this.grid_.printGrid();
 			return false;	
 		}
 	}
