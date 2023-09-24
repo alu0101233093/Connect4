@@ -1,4 +1,4 @@
-public class CheckWin {
+public class WinChecker {
     private String[][] gridSlots_;
 
     private String color_;
@@ -15,7 +15,7 @@ public class CheckWin {
         new Coordinate(1, -1)
     };
 
-    CheckWin(){
+    WinChecker(){
         this.gridSlots_ = new String[6][7];
 
         this.color_ = "";
@@ -23,7 +23,7 @@ public class CheckWin {
         actualDirection_.setCoordinate(0, 0);
     }
 
-    public void setData(int x, int y, String color){
+    private void setData(int x, int y, String color){
         coordinate_.setCoordinate(x, y);
         this.color_ = color;
     }
@@ -39,7 +39,9 @@ public class CheckWin {
         }
     }
       
-    public boolean checker() {
+    public boolean checker(int x, int y, String color) {
+        setData(x, y, color);
+
         int i = 0; int count = 1;
         while (i < directions_.length || count < 4){
             if(i % 2 == 0){

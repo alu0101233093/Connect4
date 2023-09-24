@@ -1,28 +1,26 @@
 public class Grid {
-	private Slot[][] gridSlots_;
+	private String[][] gridSlots_;
     private int count_;
 
 	Grid() {
         this.count_ = 0;
-		this.gridSlots_ = new Slot[6][7];
+		this.gridSlots_ = new String[6][7];
 
         for (int row = 0; row < 6; row++) {
             for (int col = 0; col < 7; col++) {
-                this.gridSlots_[row][col] = new Slot();
+                this.gridSlots_[row][col] = "";
             }
         }
 	}
 
 	public String getSlot(int row, int col) {
-		return this.gridSlots_[row][col].get_color();
+		return this.gridSlots_[row][col];
 	}
 
-	public boolean setSlot(int col, String color) {
-		if(this.gridSlots_[5][col].get_color() != "") {
-            return false;
-        }
-		this.gridSlots_[FirstFreeSlot(col)][col].set_color(color);
-		return true;
+	public int setSlot(int col, String color) {
+        int row = FirstFreeSlot(col);
+		this.gridSlots_[row][col] = color;
+		return row;
 	}
 
     public void printGrid() {
@@ -44,7 +42,7 @@ public class Grid {
 
 	public int FirstFreeSlot(int col) {
 		for(int i = 0; i < 6; i++) {
-			if(gridSlots_[i][col].get_color() == "") {    
+			if(gridSlots_[i][col] == "") {    
 				return i;
             }
 		}
@@ -126,7 +124,7 @@ public class Grid {
     }
 
 	public boolean tokenCounter (int row, int col, String color) {
-		if(gridSlots_[row][col].get_color() == color) {
+		if(gridSlots_[row][col] == color) {
             count_++;
         } else {
             count_ = 0;

@@ -14,9 +14,9 @@ public class Player {
         return color_;
     }
 
-    public boolean setToken(Grid gameGrid) {
+    public int setToken() {
         System.out.println(color_ + " player turn");
         String input = input_.next();
-        return gameGrid.setSlot(Integer.parseInt(input), color_);
+        return Integer.parseInt(input);
     }
 }
