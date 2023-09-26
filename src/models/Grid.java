@@ -5,7 +5,7 @@ public class Grid {
 
 	Grid() {
 		this.gridSlots_ = new String[6][7];
-        this.winChecker_ = new WinChecker();
+        this.winChecker_ = new WinChecker(this.gridSlots_);
 
         for (int row = 0; row < 6; row++) {
             for (int column = 0; column < 7; column++) {
@@ -50,8 +50,8 @@ public class Grid {
 		return -1;
 	}
 
-    public boolean checkWin(int column, String color) {
-        return winChecker_.checker(FirstFreeSlot(column), column, color);
+    public boolean checkWin(Coordinate token, String color) {
+        return winChecker_.checker(token.getX(), token.getY(), color);
     }
 
 

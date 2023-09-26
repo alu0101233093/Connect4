@@ -13,8 +13,8 @@ public class View extends WithGameView{
 
     public void play() {
         do {
-            new PlayerView(this.game).interact();
             this.game.nextTurn();
+            new PlayerView(this.game).interact();
             new GridView().printGrid(this.game);
         } while (!this.game.isWin());
         isResumed_ = true;

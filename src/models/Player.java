@@ -13,7 +13,7 @@ public class Player {
         return color_;
     }
 
-    public void setToken(int column) {
-        this.grid_.setSlot(column, this.color_);
+    public int setToken(int column) {
+        return this.grid_.setSlot(column, this.color_);
     }
 }

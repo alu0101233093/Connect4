@@ -3,6 +3,10 @@ public class Coordinate{
     private int x_;
     private int y_;
 
+    public Coordinate(){
+        setCoordinate(0, 0);
+    }
+
     Coordinate(int x, int y){
         setCoordinate(x, y);
     }
@@ -22,10 +26,10 @@ public class Coordinate{
     }
 
     public int getY(){
-        return x_;
+        return y_;
     }
 
-    public Coordinate sumar(Coordinate sumando) {
+    public Coordinate sum(Coordinate sumando) {
         return new Coordinate(x_ + sumando.getX(), y_ + sumando.getY());
     }
 }

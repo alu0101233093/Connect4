@@ -11,18 +11,18 @@ public class PlayerView {
         this.game_ = game;
         this.input_ = new Scanner(System.in);
     }
-    
-    public void interact() {
-        this.game_.putToken(this.getColumn());
+
+    public int getColumn() {
+        System.out.println(this.game_.getActiveColor() + " player turn. Enter the column (0-6):");
+        return input_.nextInt();
     }
 
     public void putToken() {
         this.game_.putToken(this.getColumn());
     }
-
-    public int getColumn() {
-        System.out.println(this.game_.getActiveColor() + " player turn. Enter the column (0-6):");
-        return input_.nextInt();
+    
+    public void interact() {
+        this.putToken();
     }
 
 }

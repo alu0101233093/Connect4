@@ -2,13 +2,13 @@ package models;
 public class Game {
 	private Grid grid_;
 	private Turn turn_;
-	private int tokenToCheck_;
+	private Coordinate tokenToCheck_;
 
 
 	public Game() {
 		this.grid_ = new Grid();
 		this.turn_ = new Turn(this.grid_);
-		this.tokenToCheck_ = -1;
+		this.tokenToCheck_ = new Coordinate();
 	}
 
 	public void nextTurn() {
@@ -24,7 +24,7 @@ public class Game {
 	}
 
 	public void putToken(int column) {
-		this.turn_.putToken(column);
+		this.tokenToCheck_.setCoordinate(this.turn_.putToken(column), column);
 	}
 
 	public boolean isWin() {
