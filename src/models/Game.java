@@ -2,12 +2,13 @@ package models;
 public class Game {
 	private Grid grid_;
 	private Turn turn_;
+	private int tokenToCheck_;
 
 
 	public Game() {
 		this.grid_ = new Grid();
 		this.turn_ = new Turn(this.grid_);
-
+		this.tokenToCheck_ = -1;
 	}
 
 	public void nextTurn() {
@@ -27,7 +28,7 @@ public class Game {
 	}
 
 	public boolean isWin() {
-		return this.grid_.checkWin(this.getActiveColor());
+		return this.grid_.checkWin(this.tokenToCheck_, this.getActiveColor());
 	}	
 
 
