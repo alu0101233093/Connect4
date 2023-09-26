@@ -1,3 +1,4 @@
+package models;
 // public class Slot {
 // 	private String color_;
 

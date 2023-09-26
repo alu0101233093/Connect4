@@ -1,3 +1,4 @@
+package models;
 public class WinChecker {
     private String[][] gridSlots_;
 

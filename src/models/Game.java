@@ -1,20 +1,55 @@
-public class ConnectFour {
+package models;
+public class Game {
 	private Grid grid_;
-	private WinChecker winChecker_; 
-	private Player[] players_;
+	private Turn turn_;
 
-	ConnectFour() {
+
+	public Game() {
 		this.grid_ = new Grid();
-		this.winChecker_ = new WinChecker();
-		this.players_ = new Player[] {new Player("Red"), new Player("Yellow")};
+		this.turn_ = new Turn(this.grid_);
+
 	}
 
-	public static void main(String[] args) {
-		ConnectFour Connect4 = new ConnectFour();
-		Connect4.startGame();
+	public void nextTurn() {
+		this.turn_.nextTurn();
 	}
 
-	public void startGame() {
+	public String getSlotColor (int row, int column) {
+		return this.grid_.getSlot(row, column);
+	}
+
+	public String getActiveColor() {
+		return this.turn_.getActiveColor();
+	}
+
+	public void putToken(int column) {
+		this.turn_.putToken(column);
+	}
+
+	public boolean isWin() {
+		return this.grid_.checkWin(this.getActiveColor());
+	}	
+
+
+	
+
+	/*public boolean checkWin(String color) {
+		if (this.grid_.checkHorizontal(color) ||
+			this.grid_.checkVertical(color) ||
+			this.grid_.checkDiagonal(color)) {
+
+			System.out.println(color + " player wins");
+			this.grid_.printGrid();
+			return true;
+		} else {
+			this.grid_.printGrid();
+			return false;	
+		}
+	}*/
+	
+}
+
+/*public void startGame() {
 		int playerTurn = 0;
 		int selectedColumn = 0;
 		int row = 0;
@@ -36,23 +71,7 @@ public class ConnectFour {
 			// 	System.out.println("Column is full");
 			// }
 		}
-	}
-
-	public boolean checkWin(String color) {
-		if (this.grid_.checkHorizontal(color) ||
-			this.grid_.checkVertical(color) ||
-			this.grid_.checkDiagonal(color)) {
-
-			System.out.println(color + " player wins");
-			this.grid_.printGrid();
-			return true;
-		} else {
-			this.grid_.printGrid();
-			return false;	
-		}
-	}
-	
-}
+	}*/
 
 
 // public class ConnectFour {

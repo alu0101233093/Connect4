@@ -1,33 +1,34 @@
+package models;
 public class Grid {
 	private String[][] gridSlots_;
-    private int count_;
+    private WinChecker winChecker_;
 
 	Grid() {
-        this.count_ = 0;
 		this.gridSlots_ = new String[6][7];
+        this.winChecker_ = new WinChecker();
 
         for (int row = 0; row < 6; row++) {
-            for (int col = 0; col < 7; col++) {
-                this.gridSlots_[row][col] = "";
+            for (int column = 0; column < 7; column++) {
+                this.gridSlots_[row][column] = "";
             }
         }
 	}
 
-	public String getSlot(int row, int col) {
-		return this.gridSlots_[row][col];
+	public String getSlot(int row, int column) {
+		return this.gridSlots_[row][column];
 	}
 
-	public int setSlot(int col, String color) {
-        int row = FirstFreeSlot(col);
-		this.gridSlots_[row][col] = color;
+	public int setSlot(int column, String color) {
+        int row = FirstFreeSlot(column);
+		this.gridSlots_[row][column] = color;
 		return row;
 	}
 
     public void printGrid() {
         System.out.println("0 1 2 3 4 5 6");
 		for (int row = 5; row >= 0; row--) {
-			for (int col = 0; col < 7; col++) {
-				String tokenColor = getSlot(row, col);
+			for (int column = 0; column < 7; column++) {
+				String tokenColor = getSlot(row, column);
 				if (tokenColor.equals("Red")) {
 					System.out.print("R ");
 				} else if (tokenColor.equals("Yellow")) {
@@ -40,16 +41,21 @@ public class Grid {
 		}
 	}
 
-	public int FirstFreeSlot(int col) {
+	public int FirstFreeSlot(int column) {
 		for(int i = 0; i < 6; i++) {
-			if(gridSlots_[i][col] == "") {    
+			if(gridSlots_[i][column] == "") {    
 				return i;
             }
 		}
 		return -1;
 	}
 
-    public boolean checkHorizontal(String color) {
+    public boolean checkWin(int column, String color) {
+        return winChecker_.checker(FirstFreeSlot(column), column, color);
+    }
+
+
+    /*public boolean checkHorizontal(String color) {
 		for(int i = 0; i < 6; i++) {
             count_ = 0;
             for(int j = 0; j < 7; j++) {
@@ -134,5 +140,5 @@ public class Grid {
             return true;
         }
 		return false;
-	}
+	} */
 }
