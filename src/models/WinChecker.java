@@ -2,7 +2,7 @@ package models;
 public class WinChecker {
     private String[][] grid_;
     private String color_;
-    private Coordinate coordinate_;
+    private Coordinate lastCoordinate_;
     private Coordinate actualDirection_;
     private static final Coordinate[] directions_ = new Coordinate[] {
         new Coordinate(1, 0),
@@ -20,12 +20,12 @@ public class WinChecker {
         this.grid_ = grid;
 
         this.color_ = "";
-        this.coordinate_ = new Coordinate(0, 0);
+        this.lastCoordinate_ = new Coordinate(0, 0);
         this.actualDirection_ = new Coordinate(0, 0);
     }
 
     private void setData(int x, int y, String color){
-        coordinate_.setCoordinate(x, y);
+        lastCoordinate_.setCoordinate(x, y);
         this.color_ = color;
     }
 
@@ -44,17 +44,17 @@ public class WinChecker {
     public boolean checker(int x, int y, String color) {
         setData(x, y, color);
 
-        int i = 0; int count = 1;
-        while (i < directions_.length && count < 4){
-            if(i % 2 == 0){
-                count = 1;
+        int directionIndex = 0; int TokenCount = 1;
+        while (directionIndex < directions_.length && TokenCount < 4){
+            if(directionIndex % 2 == 0){
+                TokenCount = 1;
             }
-            actualDirection_.setCoordinate(directions_[i]);
-            count += counter(coordinate_.sum(actualDirection_), 0);
-            i++;
+            actualDirection_.setCoordinate(directions_[directionIndex]);
+            TokenCount += counter(lastCoordinate_.sum(actualDirection_), 0);
+            directionIndex++;
         };
 
-        if (count >= 4)
+        if (TokenCount >= 4)
             return true;
         else
             return false;
