@@ -1,14 +1,17 @@
 package models;
+
 public class Grid {
 	private String[][] gridSlots_;
-    private WinChecker winChecker_;
+    private Coordinate actualDirection_;
+    private Direction[] directions_;
 
 	Grid() {
 		this.gridSlots_ = new String[6][7];
-        this.winChecker_ = new WinChecker(this.gridSlots_);
+        this.actualDirection_ = new Coordinate(0, 0);
+        this.directions_ = Direction.values();
 
-        for (int row = 0; row < 6; row++) {
-            for (int column = 0; column < 7; column++) {
+        for (int row = 0; row < Game.ROWS; row++) {
+            for (int column = 0; column < Game.COLUMNS; column++) {
                 this.gridSlots_[row][column] = "";
             }
         }
@@ -18,27 +21,10 @@ public class Grid {
 		return this.gridSlots_[row][column];
 	}
 
-	public int setSlot(int column, String color) {
+	public int placeToken(int column, String color) {
         int row = FirstFreeSlot(column);
 		this.gridSlots_[row][column] = color;
 		return row;
-	}
-
-    public void printGrid() {
-        System.out.println("0 1 2 3 4 5 6");
-		for (int row = 5; row >= 0; row--) {
-			for (int column = 0; column < 7; column++) {
-				String tokenColor = getSlot(row, column);
-				if (tokenColor.equals("Red")) {
-					System.out.print("R ");
-				} else if (tokenColor.equals("Yellow")) {
-					System.out.print("Y ");
-				} else {
-					System.out.print("- ");
-				}
-			}
-			System.out.println();
-		}
 	}
 
 	public int FirstFreeSlot(int column) {
@@ -50,95 +36,44 @@ public class Grid {
 		return -1;
 	}
 
-    public boolean checkWin(Coordinate token, String color) {
-        return winChecker_.checker(token.getX(), token.getY(), color);
+    private boolean outOfBounds(Coordinate actualCoordinate){
+        return actualCoordinate.getX() < 0 || actualCoordinate.getX() > 5 
+        || actualCoordinate.getY() < 0 || actualCoordinate.getY() > 6;
     }
 
-
-    /*public boolean checkHorizontal(String color) {
-		for(int i = 0; i < 6; i++) {
-            count_ = 0;
-            for(int j = 0; j < 7; j++) {
-                if (tokenCounter (i, j, color)) {
-                    return true;
-                }
-            }
-        }
-        return false;
-	}
-    
-	public boolean checkVertical(String color) {
-		for(int i = 0; i < 7; i++) {
-            count_ = 0;
-            for(int j = 0; j < 6; j++) {
-                if (tokenCounter (j, i, color)) {
-                    return true;
-                }
-            }
-        }
-        return false;
-	}
-
-	public boolean checkDiagonal (String color) {
-        if (checkDiagonalsAscendant(color) || checkDiagonalsDescendant(color)) {
-            return true;
+    private int tokenCounter(Coordinate actualCoordinate, String color, int result) {
+        if (outOfBounds(actualCoordinate) || this.gridSlots_[actualCoordinate.getX()][actualCoordinate.getY()] != color) {
+            return result;
         } else {
-            return false;
+            return tokenCounter(actualCoordinate.addition(actualDirection_), color, result + 1);
         }
-	}
+    }
+      
+    public boolean checkWin(Coordinate lastTokenCoordinate, String color) {
 
-    public boolean checkDiagonalsAscendant (String color) {
-        for(int i = 1; i <= 3; i++) {
-            count_ = 0;
-            for (int j = 0; j < 7 - i; j++) {
-                if (tokenCounter (j, j + i, color)) {
-                    return true;
-                }
+        int TokenCount = 1;
+        for (int directionIndex = 0; directionIndex < directions_.length && TokenCount < 4; directionIndex++) {
+            if(directionIndex % 2 == 0){
+                TokenCount = 1;
             }
-        }
-
-        for(int i = 5; i >= 3; i--) {
-            count_ = 0;
-            for (int j = 0; j <= i; j++) {
-                if (tokenCounter (i - j, j, color)) {
-                    return true;
-                }
-            }
-        }
-        return false;
+            actualDirection_.setCoordinate(directions_[directionIndex].getCoordinate());
+            TokenCount += tokenCounter(lastTokenCoordinate.addition(actualDirection_), color, 0);
+        };
+        return (TokenCount >= 4);
     }
 
-    public boolean checkDiagonalsDescendant (String color) {
-        for(int i = 2; i >= 0; i--) {
-            count_ = 0;
-            for (int j = 0; j < 6 - i; j++) {
-                if (tokenCounter (i + j, j, color)) {
-                    return true;
-                }
-            }
-        }
+    public boolean isTie() {
 
-        for(int i = 3; i > 0; i--) {
-            count_ = 0;
-            for (int j = 0; j < 7 - i; j++) {
-				if (tokenCounter (5 - j, j + i, color)) {
-                    return true;
-                }
+        for (int column = 0; column < Game.COLUMNS; column++) {
+            if (!isColumnFull(column)) {
+                return false;
             }
         }
-        return false;
+        return true;
     }
 
-	public boolean tokenCounter (int row, int col, String color) {
-		if(gridSlots_[row][col] == color) {
-            count_++;
-        } else {
-            count_ = 0;
-        }
+    public boolean isColumnFull(int column) {
+        return this.gridSlots_[Game.ROWS - 1][column] != "";
+    }
 
-        if(count_ == 4) {
-            return true;
-        }
-		return false;
-	} */
 }

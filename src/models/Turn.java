@@ -25,7 +25,7 @@ public class Turn {
     }
 
     public int putToken(int column) {
-        return this.getActivePlayer().setToken(column);
+        return this.getActivePlayer().putToken(column);
     }
 
 

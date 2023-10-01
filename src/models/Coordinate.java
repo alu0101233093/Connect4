@@ -29,7 +29,7 @@ public class Coordinate{
         return y_;
     }
 
-    public Coordinate sum(Coordinate sumando) {
-        return new Coordinate(x_ + sumando.getX(), y_ + sumando.getY());
+    public Coordinate addition(Coordinate otherCoordinate) {
+        return new Coordinate(x_ + otherCoordinate.getX(), y_ + otherCoordinate.getY());
     }
 }
